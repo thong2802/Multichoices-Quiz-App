@@ -3,7 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/customcarview.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1539855072463768" />
+        <entry key="app/src/main/res/layout/activity_question2.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.17300724637681159" />
+        <entry key="app/src/main/res/layout/activity_splash1.xml" value="0.17300724637681159" />
+        <entry key="app/src/main/res/layout/activity_splash2.xml" value="0.17300724637681159" />
+        <entry key="app/src/main/res/layout/app_bar_question2.xml" value="0.18432971014492755" />
+        <entry key="app/src/main/res/layout/content_question2.xml" value="0.18432971014492755" />
+        <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.18432971014492755" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18432971014492755" />
+        <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.18432971014492755" />
+        <entry key="app/src/main/res/layout/layout_category_item.xml" value="0.17300724637681159" />
+        <entry key="app/src/main/res/layout/nav_header_question2.xml" value="0.18432971014492755" />
       </map>
     </option>
   </component>

@@ -10,7 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MultichoicesQuizApp">
         <activity
+            android:name=".QuestionActivity2"
+            android:exported="false"
+            android:label="@string/title_activity_question2"
+            android:theme="@style/Theme.MultichoicesQuizApp.NoActionBar" />
+        <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
