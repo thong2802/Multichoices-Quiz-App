@@ -1,6 +1,7 @@
 package com.example.multichoicesquiz.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,9 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.multichoicesquizapp.Interface.IOnRecyclerViewItemClickListener
 import com.example.multichoicesquizapp.Model.Category
+import com.example.multichoicesquizapp.Model.Question
 import com.example.multichoicesquizapp.R
+import com.example.multichoicesquizapp.common.common
 
 class CategoryAdapter(
     internal var context : Context,
@@ -47,7 +50,9 @@ class CategoryAdapter(
         holder.txt_category_name.text = categoryList[position].name
         holder.setiOnRecyclerViewItemClickListener(object :IOnRecyclerViewItemClickListener{
             override fun OnClick(view: View, position: Int) {
-                Toast.makeText(context, "Click on" + categoryList[position].name, Toast.LENGTH_SHORT).show()
+              common.selectedCagory = categoryList[position]
+              val intent = Intent(context, Question::class.java)
+              context.startActivity(intent)
             }
         })
     }

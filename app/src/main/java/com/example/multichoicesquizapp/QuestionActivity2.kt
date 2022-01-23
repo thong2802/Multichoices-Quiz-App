@@ -1,7 +1,10 @@
 package com.example.multichoicesquizapp
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.Menu
+import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -11,12 +14,25 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.multichoicesquiz.DBHelper.DBHelper
+import com.example.multichoicesquizapp.Adapter.GridAnwerAdapter
+import com.example.multichoicesquizapp.Model.CurrentQuestion
+import com.example.multichoicesquizapp.common.common
 import com.example.multichoicesquizapp.databinding.ActivityQuestion2Binding
+import com.google.android.material.datepicker.MaterialStyledDatePickerDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.android.synthetic.main.content_question2.*
+import java.util.concurrent.TimeUnit
 
 class QuestionActivity2 : AppCompatActivity() {
 
+   var countDownTimer : CountDownTimer? = null
+   var timePlay = common.TOTLAL_TIME
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityQuestion2Binding
+
+    lateinit var adapter : GridAnwerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +54,77 @@ class QuestionActivity2 : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        //get Question base on CATEGORY
+        getQuestion()
+
+        if(common.questionList.size > 0){
+            // show timer, Right anwer, text View
+            txt_time.visibility = View.VISIBLE
+            txt_right_anwser.visibility = View.VISIBLE
+            countTime()
+
+            // gen item fro grid anwer
+            genItems()
+            grid_answer.setHasFixedSize(true)
+            grid_answer.layoutManager = GridLayoutManager(
+                this,
+                if (common.questionList.size > 5)
+                    common.questionList.size / 2
+                else common.questionList.size)
+            adapter = GridAnwerAdapter(this, common.answerSheetList)
+            grid_answer.adapter = adapter
+
+            // Gen fragament List
+
+        }
+    }
+
+    private fun genItems() {
+        for (i in common.questionList.indices) {
+            common.answerSheetList.add(
+                CurrentQuestion(
+                    i,
+                    common.ANSWER_TYPE.NO_ANSWER
+                )
+            ) // No answer for all question
+        }
+
+    }
+
+    private fun countTime() {
+        countDownTimer = object:CountDownTimer(common.TOTLAL_TIME.toLong(), 1000){
+            override fun onTick(interval: Long) {
+                txt_time.text = (java.lang.String.format("%2d:%2d",
+                    TimeUnit.MILLISECONDS.toMinutes(interval),
+                    TimeUnit.MILLISECONDS.toSeconds(interval) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(interval))))
+                    timePlay -= 1000
+            }
+
+            override fun onFinish() {
+                finishGame()
+            }
+
+        }
+    }
+
+    private fun finishGame() {
+        // code late
+    }
+
+    private fun getQuestion() {
+        common.questionList = DBHelper.getInstance(this)
+            .getAllQuestionByCategory(common.selectedCagory!!.id)
+
+        if (common.questionList.size == 0){
+            MaterialAlertDialogBuilder(this)
+                // Add customization options here
+                .setTitle("Oppps")
+                .setIcon(R.drawable.ic_oppps)
+                .setMessage("We don't have any question for this ${common.selectedCagory!!.name} category")
+                .setPositiveButton("Oke", null)
+                .show()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
