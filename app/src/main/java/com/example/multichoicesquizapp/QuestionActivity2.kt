@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.multichoicesquiz.DBHelper.DBHelper
 import com.example.multichoicesquizapp.Adapter.GridAnwerAdapter
+import com.example.multichoicesquizapp.Adapter.MyFragmentAdapter
 import com.example.multichoicesquizapp.Model.CurrentQuestion
 import com.example.multichoicesquizapp.common.common
 import com.example.multichoicesquizapp.databinding.ActivityQuestion2Binding
@@ -27,7 +28,7 @@ import java.util.concurrent.TimeUnit
 
 class QuestionActivity2 : AppCompatActivity() {
 
-   var countDownTimer : CountDownTimer? = null
+   lateinit var countDownTimer : CountDownTimer
    var timePlay = common.TOTLAL_TIME
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityQuestion2Binding
@@ -76,7 +77,22 @@ class QuestionActivity2 : AppCompatActivity() {
             grid_answer.adapter = adapter
 
             // Gen fragament List
+            genFragmentList()
 
+            val fragmentAdapter = MyFragmentAdapter(supportFragmentManager, this,common.fragmentList)
+            view_pager.offscreenPageLimit = common.questionList.size
+            view_pager.adapter = fragmentAdapter // Bind Question to View Pager
+            slide_tabs.setupWithViewPager(view_pager)
+        }
+    }
+
+    private fun genFragmentList() {
+        for (i in common.questionList.indices){
+            val bundle = Bundle()
+            bundle.putInt("index", i)
+            var fragment = QuestionFragment()
+            fragment.arguments = bundle
+            common.fragmentList.add(fragment)
         }
     }
 

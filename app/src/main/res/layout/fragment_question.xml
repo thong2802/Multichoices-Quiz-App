@@ -1,14 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".QuestionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+   <LinearLayout
+       android:layout_margin="16dp"
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
 
-</FrameLayout>
+       <FrameLayout
+           android:id="@+id/frame_image"
+           android:layout_width="match_parent"
+           android:layout_height="200dp">
+
+            <ImageView
+                android:id="@+id/img_question"
+                android:scaleType="fitCenter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </ImageView>
+           <ProgressBar
+               android:id="@+id/progress_bar"
+               android:layout_gravity="center"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+           </ProgressBar>
+       </FrameLayout>
+
+       <TextView
+           android:id="@+id/txt_question_text"
+           android:text="What do you choose?"
+           android:textSize="20sp"
+           android:textStyle="bold"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+       </TextView>
+       <CheckBox
+           android:id="@+id/cbA"
+           android:text="Answer A"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+       </CheckBox>
+       <CheckBox
+           android:id="@+id/cbB"
+           android:text="Answer B"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+       </CheckBox>
+       <CheckBox
+           android:id="@+id/cbC"
+           android:text="Answer C"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+       </CheckBox>
+       <CheckBox
+           android:id="@+id/cbD"
+           android:text="Answer D"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+       </CheckBox>
+   </LinearLayout>
+
+</RelativeLayout>
