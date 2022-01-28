@@ -4,5 +4,5 @@ import com.example.multichoicesquizapp.common.common
 
 data class CurrentQuestion(
     val questionIndex : Int,
-    val type : common.ANSWER_TYPE
+    var type : common.ANSWER_TYPE
 )

@@ -11,6 +11,8 @@ object common {
     var questionList : MutableList<Question> = ArrayList()
     var selectedCagory : Category? = null
     var fragmentList : MutableList<QuestionFragment> = ArrayList()
+    var selected_values : MutableList<String> = ArrayList()
+
 
     enum class ANSWER_TYPE {
         NO_ANSWER,

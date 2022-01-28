@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.multichoicesquizapp.Interface.IOnRecyclerViewItemClickListener
 import com.example.multichoicesquizapp.Model.Category
 import com.example.multichoicesquizapp.Model.Question
+import com.example.multichoicesquizapp.QuestionActivity2
 import com.example.multichoicesquizapp.R
 import com.example.multichoicesquizapp.common.common
 
@@ -51,7 +52,7 @@ class CategoryAdapter(
         holder.setiOnRecyclerViewItemClickListener(object :IOnRecyclerViewItemClickListener{
             override fun OnClick(view: View, position: Int) {
               common.selectedCagory = categoryList[position]
-              val intent = Intent(context, Question::class.java)
+              val intent = Intent(context, QuestionActivity2::class.java)
               context.startActivity(intent)
             }
         })
