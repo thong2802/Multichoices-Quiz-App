@@ -30,4 +30,7 @@
     <style name="Theme.MultichoicesQuizApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.MultichoicesQuizApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
 </resources>
+

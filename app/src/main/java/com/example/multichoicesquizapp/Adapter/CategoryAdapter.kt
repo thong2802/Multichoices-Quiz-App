@@ -6,15 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.multichoicesquizapp.Interface.IOnRecyclerViewItemClickListener
 import com.example.multichoicesquizapp.Model.Category
-import com.example.multichoicesquizapp.Model.Question
 import com.example.multichoicesquizapp.QuestionActivity2
 import com.example.multichoicesquizapp.R
-import com.example.multichoicesquizapp.common.common
+import com.example.multichoicesquizapp.common.Common
 
 class CategoryAdapter(
     internal var context : Context,
@@ -51,7 +49,7 @@ class CategoryAdapter(
         holder.txt_category_name.text = categoryList[position].name
         holder.setiOnRecyclerViewItemClickListener(object :IOnRecyclerViewItemClickListener{
             override fun OnClick(view: View, position: Int) {
-              common.selectedCagory = categoryList[position]
+              Common.selectedCagory = categoryList[position]
               val intent = Intent(context, QuestionActivity2::class.java)
               context.startActivity(intent)
             }

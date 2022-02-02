@@ -51,7 +51,7 @@ class DBHelper(context : Context) : SQLiteAssetHelper(context, DB_NAME, null,  D
     @SuppressLint("Range")
     fun getAllQuestionByCategory(categoryId: Int) : MutableList<Question>{
         var db : SQLiteDatabase = instance!!.writableDatabase
-        var cursor : Cursor = db.rawQuery("SELECT * FROM Question Where categoryId = $categoryId ORDER BY RAMDOM()", null)
+        var cursor : Cursor = db.rawQuery("SELECT * FROM Question WHERE categoryId = $categoryId ORDER BY RANDOM() LIMIT 30", null)
         val questionlist = ArrayList<Question>()
         if (cursor.moveToFirst()){
             while (!cursor.isAfterLast) {

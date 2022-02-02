@@ -1,6 +1,7 @@
 package com.example.multichoicesquizapp
 
-import android.opengl.Visibility
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
@@ -11,7 +12,7 @@ import android.widget.*
 import com.example.multichoicesquizapp.Interface.IAnswerSelect
 import com.example.multichoicesquizapp.Model.CurrentQuestion
 import com.example.multichoicesquizapp.Model.Question
-import com.example.multichoicesquizapp.common.common
+import com.example.multichoicesquizapp.common.Common
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_question.*
@@ -39,7 +40,7 @@ class QuestionFragment : Fragment(), IAnswerSelect {
 
         questionIndex = requireArguments().getInt("index", -1)
         frame_image = itemView.findViewById(R.id.frame_image) as FrameLayout
-        question = common.questionList[questionIndex]
+        question = Common.questionList[questionIndex]
         if (question != null){
             progress_bar = itemView.findViewById(R.id.progress_bar) as ProgressBar
             if (question!!.isImageQuestion) {
@@ -76,33 +77,33 @@ class QuestionFragment : Fragment(), IAnswerSelect {
             // EVEN
             cbA.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked){
-                    common.selected_values.add(cbA.text.toString())
+                    Common.selected_values.add(cbA.text.toString())
                 }else {
-                    common.selected_values.remove(cbA.text.toString())
+                    Common.selected_values.remove(cbA.text.toString())
                 }
             }
 
             cbB.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked){
-                    common.selected_values.add(cbB.text.toString())
+                    Common.selected_values.add(cbB.text.toString())
                 }else {
-                    common.selected_values.remove(cbB.text.toString())
+                    Common.selected_values.remove(cbB.text.toString())
                 }
             }
 
             cbC.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked){
-                    common.selected_values.add(cbC.text.toString())
+                    Common.selected_values.add(cbC.text.toString())
                 }else {
-                    common.selected_values.remove(cbC.text.toString())
+                    Common.selected_values.remove(cbC.text.toString())
                 }
             }
 
             cbD.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked){
-                    common.selected_values.add(cbD.text.toString())
+                    Common.selected_values.add(cbD.text.toString())
                 }else {
-                    common.selected_values.remove(cbD.text.toString())
+                    Common.selected_values.remove(cbD.text.toString())
                 }
             }
 
@@ -113,13 +114,13 @@ class QuestionFragment : Fragment(), IAnswerSelect {
 
     override fun selectedAnswer(): CurrentQuestion {
         // REMOVE ALL duplicate item in Select_answer
-        common.selected_values.distinct()
+        Common.selected_values.distinct()
 
-        if (common.answerSheetList[questionIndex].type == common.ANSWER_TYPE.NO_ANSWER){
-            val currentQuestion = CurrentQuestion(questionIndex, common.ANSWER_TYPE.NO_ANSWER)
+        if (Common.answerSheetList[questionIndex].type == Common.ANSWER_TYPE.NO_ANSWER){
+            val currentQuestion = CurrentQuestion(questionIndex, Common.ANSWER_TYPE.NO_ANSWER)
             var result = StringBuilder()
-            if (common.selected_values.size > 1){ // if multiple choose
-                  var arrayAnswer = common.selected_values.toTypedArray()
+            if (Common.selected_values.size > 1){ // if multiple choose
+                  var arrayAnswer = Common.selected_values.toTypedArray()
                 // here we will get the first charater answer
                 // EX : array[0] = A. Paris
                 // EX : array[1] = B. NewYork
@@ -132,43 +133,83 @@ class QuestionFragment : Fragment(), IAnswerSelect {
                         result.append((arrayAnswer!![i] as String).substring(0,1))
                     }
                 }
-            }else if (common.selected_values.size == 1) { // only one answer
-                var arrayAnswer = common.selected_values.toTypedArray()
+            }else if (Common.selected_values.size == 1) { // only one answer
+                var arrayAnswer = Common.selected_values.toTypedArray()
                 result.append((arrayAnswer!![0] as String).substring(0,1))
             }
             if (question != null) {
                if (!TextUtils.isEmpty(result)){
                    if (result.toString() == question!!.correctAnswer){
-                       currentQuestion.type = common.ANSWER_TYPE.RIGHT_ANSWER
+                       currentQuestion.type = Common.ANSWER_TYPE.RIGHT_ANSWER
                    }else {
-                       currentQuestion.type = common.ANSWER_TYPE.WRONG_ANSWER
+                       currentQuestion.type = Common.ANSWER_TYPE.WRONG_ANSWER
                    }
                }else {
-                   currentQuestion.type = common.ANSWER_TYPE.NO_ANSWER
+                   currentQuestion.type = Common.ANSWER_TYPE.NO_ANSWER
                }
             }else {
                 Toast.makeText(activity, "Can not get question", Toast.LENGTH_SHORT).show()
-                currentQuestion.type = common.ANSWER_TYPE.NO_ANSWER
+                currentQuestion.type = Common.ANSWER_TYPE.NO_ANSWER
             }
 
-            common.selected_values.clear() // clear select array
+            Common.selected_values.clear() // clear select array
             return currentQuestion
         }else {
-            return common.answerSheetList[questionIndex]
+            return Common.answerSheetList[questionIndex]
         }
     }
 
     override fun showCorrectAnwer() {
-
+        var correctAnswers = question!!.correctAnswer!!.split(",".toRegex())
+            .dropLastWhile { it.isEmpty() }
+        for (answer: String in correctAnswers) {
+            if (answer.equals("A")) {
+                cbA.setTypeface(null, Typeface.BOLD)
+                cbA.setTextColor(Color.RED)
+            } else if (answer.equals("B")) {
+                cbB.setTypeface(null, Typeface.BOLD)
+                cbB.setTextColor(Color.RED)
+            } else if (answer.equals("C")) {
+                cbC.setTypeface(null, Typeface.BOLD)
+                cbC.setTextColor(Color.RED)
+            } else if (answer.equals("D")) {
+                cbD.setTypeface(null, Typeface.BOLD)
+                cbD.setTextColor(Color.RED)
+            }
+        }
     }
 
     override fun disableAnswer() {
-
+        cbA.isEnabled = false
+        cbB.isEnabled = false
+        cbC.isEnabled = false
+        cbD.isEnabled = false
     }
 
     override fun resetQuestion() {
+        cbA.isEnabled = true
+        cbB.isEnabled = true
+        cbC.isEnabled = true
+        cbD.isEnabled = true
 
+        cbA.isChecked = false
+        cbB.isChecked = false
+        cbC.isChecked = false
+        cbD.isChecked = false
+
+        cbA.setTypeface(null, Typeface.NORMAL)
+        cbA.setTextColor(Color.BLACK)
+
+        cbB.setTypeface(null, Typeface.NORMAL)
+        cbB.setTextColor(Color.BLACK)
+
+        cbC.setTypeface(null, Typeface.NORMAL)
+        cbC.setTextColor(Color.BLACK)
+
+        cbD.setTypeface(null, Typeface.NORMAL)
+        cbD.setTextColor(Color.BLACK)
+
+        Common.selected_values.clear()
     }
-
 
 }
